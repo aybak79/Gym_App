@@ -1,11 +1,36 @@
 import { useState } from "react";
 import { mono, colors } from "../theme";
-import { approaches, hrZones } from "../data/cardio";
+import { approaches, hrZones, weeklyChecklist } from "../data/cardio";
+import { useLocalStorage, weekKey } from "../hooks/useLocalStorage";
+
+const TYPE_META = {
+  WALK: { color: colors.green, icon: "🚶" },
+  LISS: { color: colors.cyan, icon: "◎" },
+  HIIT: { color: colors.red, icon: "⚡" },
+};
 
 export default function CardioMode() {
   const [activeTab, setActiveTab] = useState("BRISK WALKING");
   const tabs = Object.keys(approaches);
   const current = approaches[activeTab];
+
+  const [weekState, setWeekState] = useLocalStorage("cardio-weekly-checked", {
+    week: weekKey(),
+    checked: {},
+  });
+
+  // Auto-reset the checklist once a new week starts.
+  const thisWeek = weekKey();
+  const weekChecked = weekState.week === thisWeek ? weekState.checked : {};
+  if (weekState.week !== thisWeek) {
+    setWeekState({ week: thisWeek, checked: {} });
+  }
+
+  const toggleDay = (day) => {
+    setWeekState({ week: thisWeek, checked: { ...weekChecked, [day]: !weekChecked[day] } });
+  };
+
+  const doneCount = weeklyChecklist.filter((d) => weekChecked[d.day]).length;
 
   return (
     <div style={{ width: "100%", maxWidth: 920, margin: "0 auto" }}>
@@ -39,6 +64,87 @@ export default function CardioMode() {
       <p style={{ textAlign: "center", fontSize: 11, letterSpacing: 2, color: colors.textMuted, margin: "0 0 28px" }}>
         LISS · HIIT · BRISK WALKING · MIXED APPROACH
       </p>
+
+      {/* Weekly Cardio Checklist */}
+      <div
+        style={{
+          background: colors.panel,
+          border: `1px solid ${colors.border}`,
+          borderLeft: `3px solid ${colors.amber}`,
+          borderRadius: 6,
+          overflow: "hidden",
+          marginBottom: 20,
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "12px 18px",
+            borderBottom: `1px solid ${colors.border}`,
+          }}
+        >
+          <span style={{ fontSize: 10, letterSpacing: 2, color: colors.amber, fontWeight: 700 }}>
+            WEEKLY CARDIO CHECKLIST
+          </span>
+          <span style={{ fontSize: 11, fontWeight: 700, color: colors.amber }}>
+            {doneCount}/{weeklyChecklist.length}
+          </span>
+        </div>
+        {weeklyChecklist.map((d, i) => {
+          const done = !!weekChecked[d.day];
+          const meta = TYPE_META[d.type];
+          return (
+            <label
+              key={d.day}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "12px 18px",
+                borderBottom: i < weeklyChecklist.length - 1 ? `1px solid ${colors.divider}` : "none",
+                cursor: "pointer",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                <input
+                  type="checkbox"
+                  checked={done}
+                  onChange={() => toggleDay(d.day)}
+                  style={{ width: 18, height: 18, accentColor: meta.color, cursor: "pointer", flexShrink: 0 }}
+                />
+                <span style={{ fontSize: 11, fontWeight: 700, color: colors.textMuted, minWidth: 32 }}>
+                  {d.day}
+                </span>
+                <span
+                  style={{
+                    fontSize: 12,
+                    color: done ? colors.textMuted : colors.textMain,
+                    textDecoration: done ? "line-through" : "none",
+                  }}
+                >
+                  {d.description}
+                </span>
+              </div>
+              <span
+                style={{
+                  fontSize: 9,
+                  letterSpacing: 1,
+                  fontWeight: 700,
+                  color: meta.color,
+                  background: `${meta.color}1f`,
+                  padding: "2px 8px",
+                  borderRadius: 3,
+                  flexShrink: 0,
+                }}
+              >
+                {meta.icon} {d.type}
+              </span>
+            </label>
+          );
+        })}
+      </div>
 
       {/* Scheduling Rule Callout */}
       <div
@@ -238,6 +344,35 @@ export default function CardioMode() {
               </span>
             </div>
           ))}
+        </div>
+      )}
+
+      {/* HIIT Interval Timer Setup */}
+      {current.timerSetup && (
+        <div
+          style={{
+            background: colors.panel,
+            border: `1px solid ${colors.border}`,
+            borderRadius: 6,
+            overflow: "hidden",
+            marginBottom: 16,
+          }}
+        >
+          <div style={{ padding: "12px 18px", borderBottom: `1px solid ${colors.border}` }}>
+            <span style={{ fontSize: 10, letterSpacing: 2, color: colors.cyan, fontWeight: 700 }}>
+              TIMER SETUP
+            </span>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12, padding: "14px 18px" }}>
+            {current.timerSetup.map((t) => (
+              <div key={t.name}>
+                <div style={{ fontSize: 11, fontWeight: 700, color: colors.textMain, marginBottom: 4 }}>
+                  {t.name}
+                </div>
+                <div style={{ fontSize: 11, color: colors.textMuted, lineHeight: 1.7 }}>{t.steps}</div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 

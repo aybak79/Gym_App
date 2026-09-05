@@ -1,3 +1,15 @@
+// Default weekly cardio checklist — one row per day. Based on the
+// "Mixed Protocol" sample week below.
+export const weeklyChecklist = [
+  { day: "MON", type: "WALK", description: "Rest day — Brisk Walk, 30 min" },
+  { day: "TUE", type: "LISS", description: "Post-workout — LISS, 30 min" },
+  { day: "WED", type: "LISS", description: "Rest day — LISS, 40 min" },
+  { day: "THU", type: "HIIT", description: "Post-workout — HIIT, 15 min" },
+  { day: "FRI", type: "WALK", description: "Rest day — Brisk Walk, 30 min" },
+  { day: "SAT", type: "LISS", description: "Post-workout — LISS, 30 min" },
+  { day: "SUN", type: "HIIT", description: "Rest day — HIIT, 20 min" },
+];
+
 export const approaches = {
   "BRISK WALKING": {
     color: "#00e68a",
@@ -54,6 +66,18 @@ export const approaches = {
       "Assault Bike is king for full-body HIIT — arms and legs both contribute",
       "Rower: explode on the drive, control the recovery — don't just yank",
       "True HIIT means genuinely maximal effort in work intervals. If you can talk, you're not there",
+    ],
+    timerSetup: [
+      {
+        name: "Gymboss Timer",
+        steps:
+          "Interval mode → Interval 1 = work time → Interval 2 = rest time → set rounds → alert on vibrate + beep → clip to waistband or machine.",
+      },
+      {
+        name: "Apple Watch",
+        steps:
+          "Workout app → HIIT (or an interval app like Intervals Pro / SmartGym) → set work/rest durations to match the protocol → set total rounds → haptic tap signals transitions → check live HR to confirm Zone 4–5 during work intervals.",
+      },
     ],
   },
   "MIXED PROTOCOL": {

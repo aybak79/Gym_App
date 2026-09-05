@@ -26,3 +26,13 @@ export function useLocalStorage(key, initialValue) {
 export function todayKey() {
   return new Date().toISOString().slice(0, 10);
 }
+
+// Returns the date (YYYY-MM-DD) of the current week's Monday, used to
+// auto-reset weekly checklists once a new week starts.
+export function weekKey() {
+  const now = new Date();
+  const diffToMonday = (now.getDay() + 6) % 7; // days since most recent Monday
+  const monday = new Date(now);
+  monday.setDate(now.getDate() - diffToMonday);
+  return monday.toISOString().slice(0, 10);
+}
