@@ -39,7 +39,7 @@ export default function GymMode() {
           textTransform: "uppercase",
         }}
       >
-        GYM DAY
+        QUICK WORKOUTS
       </h1>
       <p
         style={{
@@ -75,9 +75,6 @@ export default function GymMode() {
             }}
             onClick={() => d.active && setActiveTab(d.label)}
           >
-            <div style={{ fontSize: 10, letterSpacing: 1.5, color: colors.textMuted, marginBottom: 4 }}>
-              {d.day}
-            </div>
             <div style={{ fontSize: 12, fontWeight: 700, color: d.active ? d.color : colors.textMuted }}>
               {d.label}
             </div>

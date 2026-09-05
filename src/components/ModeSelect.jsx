@@ -52,7 +52,7 @@ export default function ModeSelect({ onSelect }) {
             }}
           >
             <div style={{ fontSize: 16, fontWeight: 800, color: colors.green, letterSpacing: 2 }}>
-              GYM
+              QUICK WORKOUTS
             </div>
             <div style={{ fontSize: 11, color: colors.textMuted, marginTop: 6 }}>
               Full machine split · Upper/Lower A & B
@@ -73,10 +73,31 @@ export default function ModeSelect({ onSelect }) {
             }}
           >
             <div style={{ fontSize: 16, fontWeight: 800, color: colors.cyan, letterSpacing: 2 }}>
-              HOUSE
+              HOUSE WORKOUT
             </div>
             <div style={{ fontSize: 11, color: colors.textMuted, marginTop: 6 }}>
               Bodyweight — 100 push-ups · 100 squats · 10 min walk
+            </div>
+          </button>
+
+          <button
+            onClick={() => onSelect("SIXMONTH")}
+            style={{
+              background: colors.panel,
+              border: `1px solid ${colors.border}`,
+              borderLeft: `3px solid ${colors.purple}`,
+              borderRadius: 6,
+              padding: "22px 20px",
+              textAlign: "left",
+              cursor: "pointer",
+              fontFamily: mono,
+            }}
+          >
+            <div style={{ fontSize: 16, fontWeight: 800, color: colors.purple, letterSpacing: 2 }}>
+              6 MONTH TRAINING PROGRAM
+            </div>
+            <div style={{ fontSize: 11, color: colors.textMuted, marginTop: 6 }}>
+              3 phases · progressive overload · 24 weeks
             </div>
           </button>
 

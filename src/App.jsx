@@ -4,6 +4,7 @@ import ModeSelect from "./components/ModeSelect";
 import TopNav from "./components/TopNav";
 import HouseMode from "./components/HouseMode";
 import GymMode from "./components/GymMode";
+import SixMonthMode from "./components/SixMonthMode";
 import CardioMode from "./components/CardioMode";
 
 export default function App() {
@@ -22,8 +23,9 @@ export default function App() {
       {mode ? (
         <>
           <TopNav active={mode} onChange={setMode} />
-          {mode === "GYM" && <GymMode />}
           {mode === "HOUSE" && <HouseMode />}
+          {mode === "GYM" && <GymMode />}
+          {mode === "SIXMONTH" && <SixMonthMode />}
           {mode === "CARDIO" && <CardioMode />}
         </>
       ) : (

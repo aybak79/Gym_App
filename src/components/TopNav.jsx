@@ -1,8 +1,9 @@
 import { mono, colors } from "../theme";
 
 const items = [
-  { key: "GYM", label: "GYM", color: colors.green },
-  { key: "HOUSE", label: "HOUSE", color: colors.cyan },
+  { key: "HOUSE", label: "HOUSE WORKOUT", color: colors.cyan },
+  { key: "GYM", label: "QUICK WORKOUTS", color: colors.green },
+  { key: "SIXMONTH", label: "6 MONTH PROGRAM", color: colors.purple },
   { key: "CARDIO", label: "CARDIO", color: colors.amber },
 ];
 
